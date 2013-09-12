@@ -9,7 +9,7 @@ else
 	echo $NID > $CONTROL_FILE
 fi
 
-brightness=`./write_to_kb read`
+brightness=`$(dirname $0)/write_to_kb read`
 
 case $1 in
 	"up")
@@ -33,9 +33,9 @@ elif [ "$brightness" -gt 255 ]; then
 	brightness=255
 fi
 
-./write_to_kb write $brightness
+`dirname $0`/write_to_kb write $brightness
 
-visible_br=`echo "$brightness / 2 * 4 / 5" | bc`
+visible_br=`echo "$brightness / 2.55" | bc`
 
 NID=`notify-send "Keyboard Brightness" -r $NID -t 500 -i xfpm-keyboard-100 -h int:value:$visible_br -p`
 
